@@ -1,0 +1,2 @@
+COMANDO PARA INSTALAR LIBRERIAS
+py -m pip install matplotlib
