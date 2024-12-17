@@ -23,9 +23,15 @@ data_test=data_test.cache()
 classes=["0","1","2","3","4","5","6","7","8","9"]
 #modelo
 model=tf.keras.Sequential([
-    tf.keras.layers.Flatten(input_shape=(28,28,1)),#Flatten pasa de matriz 28x28 a capa de entrada de 28x28 y un canal
-    tf.keras.layers.Dense(units=50,activation="relu"),#relu cambia los valores negativos a 0
-    tf.keras.layers.Dense(units=50,activation="relu"),
+    tf.keras.layers.Conv2D(32,(3,3), input_shape=(28,28,1),activation="relu"),
+    tf.keras.layers.MaxPooling2D(2,2),#2x2 tamaño de la matriz
+    
+    tf.keras.layers.Conv2D(64,(3,3),activation="relu"),
+    tf.keras.layers.MaxPooling2D(2,2),
+
+    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Flatten(),#Flatten pasa de matriz 28x28 a capa de entrada de 28x28 y un canal
+    tf.keras.layers.Dense(units=100,activation="relu"),#relu cambia los valores negativos a 0
     tf.keras.layers.Dense(10,activation="softmax")#sofmax convierte las salidas en probabilidades que suman 1
 ])
 model.compile(
@@ -48,4 +54,4 @@ history=model.fit(
     epochs=60,
     steps_per_epoch=math.ceil(no_ex_train/BATCH_SIZE)#calcula el numero de pasos por cada epoca,math.cel redonde hacia arriba al entero mas cercano
 )
-model.save("deteccionDeNumeros.h5")
+model.save("redConvolucional.h5")
