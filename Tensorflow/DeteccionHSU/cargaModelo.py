@@ -3,13 +3,7 @@ import numpy
 import cv2
 import matplotlib.pyplot as plt
 import tensorflow_datasets as tfd
-
-"""""
-modelo = tf.keras.models.load_model("C:\\Users\\ferna\\Documents\\vision_artificial\\Tensorflow\\C2F.keras")
-print("100 Celsius a fahrenheit:")
-resultado=modelo.predict(np.array([100.0])){{}}
-print(resultado,"fahrenheit")
-"""
+"""""codigo comentado si se quiere usar imagenes de emnist para pruebas
 #funcion de normalizacion
 def normalizar(images,labels):
     images=tf.cast(images,tf.float32)#convierte los valores de las imagenes a float32
@@ -25,26 +19,30 @@ data_test=data_test.map(normalizar)
 #agregar a cache
 data_train=data_train.cache()
 data_test=data_test.cache()
-classes=["0","1","2","3","4","5","6","7","8","9"]
-
-
+"""
+#carga de modelo e imagen de prueba
 model=tf.keras.models.load_model("C:\\Users\\ferna\\Documents\\vision_artificial\\Tensorflow\\DeteccionHSU\\redConvolucionalHSU.h5")
-numero=cv2.imread("C:\\Users\\ferna\Documents\\vision_artificial\\Tensorflow\\DeteccionHSU\\fotos\\H4.jpg",cv2.IMREAD_GRAYSCALE)
-if numero is None:
+image=cv2.imread("C:\\Users\\ferna\Documents\\vision_artificial\\Tensorflow\\DeteccionHSU\\fotos\\white2.jpg",cv2.IMREAD_GRAYSCALE)
+if image is None:
     print("error al cargar la imagen")
-numero=cv2.resize(numero,(28,28))
-numero=numero/255.0
-numero = numpy.expand_dims(numero, axis=-1)  # Agregar un canal (grayscale)
-numero = numpy.expand_dims(numero, axis=0)  # Agregar dimensión de batch
-cv2.imshow("Imagen", numero.squeeze())  # Eliminar dimensiones extra para mostrar la imagen
-# Espera hasta que el usuario presione una tecla
-cv2.waitKey(0)
-
-# Cierra todas las ventanas abiertas de OpenCV
-cv2.destroyAllWindows()
-classes=["0","1","2","3","4","5","6","7","8","9"]
-
-resultado=model.predict(numero)
-resultado=numpy.argmax(resultado)
-#resultado=classes[resultado]
-print(resultado)
+image=cv2.resize(image,(28,28))
+#condicional para distinguir entre imagen en blanco o imagen con letra
+if numpy.all(image>100) :
+    print("blanco")
+else:
+    print("letra")
+    letter_detected=["H","S","U"]
+    #normalizar imagen 
+    image=image/255.0
+    image = numpy.expand_dims(image, axis=-1)  # Agregar un canal (grayscale)
+    image = numpy.expand_dims(image, axis=0)  # Agregar dimensión de batch
+    #mostrar imagen normalizada
+    cv2.imshow("Imagen", image.squeeze())  # Eliminar dimensiones extra para mostrar la imagen
+    # Espera a presionar una tecla para cerrar la imagen
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    #procesar resultado e imprimirlo
+    resultado=model.predict(image)
+    resultado=numpy.argmax(resultado)
+    resultado=letter_detected[resultado]
+    print(resultado)
