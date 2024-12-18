@@ -28,8 +28,8 @@ data_test=data_test.cache()
 classes=["0","1","2","3","4","5","6","7","8","9"]
 
 
-model=tf.keras.models.load_model("C:\\Users\\ferna\\Documents\\vision_artificial\\Tensorflow\\Deteccion de numeros\\redConvolucional.h5")
-numero=cv2.imread("C:\\Users\\ferna\Documents\\vision_artificial\\Tensorflow\\Deteccion de numeros\\fotos\\seis.png",cv2.IMREAD_GRAYSCALE)
+model=tf.keras.models.load_model("C:\\Users\\ferna\\Documents\\vision_artificial\\Tensorflow\\DeteccionHSU\\redConvolucionalHSU.h5")
+numero=cv2.imread("C:\\Users\\ferna\Documents\\vision_artificial\\Tensorflow\\DeteccionHSU\\fotos\\H4.jpg",cv2.IMREAD_GRAYSCALE)
 if numero is None:
     print("error al cargar la imagen")
 numero=cv2.resize(numero,(28,28))
@@ -46,5 +46,5 @@ classes=["0","1","2","3","4","5","6","7","8","9"]
 
 resultado=model.predict(numero)
 resultado=numpy.argmax(resultado)
-resultado=classes[resultado]
+#resultado=classes[resultado]
 print(resultado)
