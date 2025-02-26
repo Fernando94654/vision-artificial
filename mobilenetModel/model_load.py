@@ -7,7 +7,7 @@ from keras.utils import custom_object_scope
 import tensorflow_hub as hub
 #carga de modelo
 with custom_object_scope({'KerasLayer': hub.KerasLayer}):
-    model = tf.keras.models.load_model("C:\\Users\\ferna\\Documents\\vision_artificial\\mobilenetModel\\HSU_detection_mobilenetv3.h5")
+    model = tf.keras.models.load_model("C:\\Users\\ferna\\Documents\\vision_artificial\\mobilenetModel\\HSU_detection_mobilenetv2.h5")
 #carga de imagen
 image=cv2.imread("C:\\Users\\ferna\\Documents\\vision_artificial\\fotos\\dataset_HSU\\S\\image6.jpeg")
 if image is None:
